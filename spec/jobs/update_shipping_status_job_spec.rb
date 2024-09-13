@@ -25,5 +25,18 @@ RSpec.describe UpdateShippingStatusJob, type: :job do
       expect(processing_order.reload.status).to eq('processing')
       expect(delivered_order.reload.status).to eq('delivered')
     end
+
+    context 'when Patches::FixedShipment.find raises Fedex::ShipmentNotFound' do
+      before do
+        allow(Patches::FixedShipment).to receive(:find).and_raise(Fedex::ShipmentNotFound)
+      end
+
+      it 'creates a new shipment and updates the order' do
+        UpdateShippingStatusJob.new.perform
+
+        expect(awaiting_pickup_order.reload.status).to eq('awaiting_pickup')
+        expect(in_transit_order.reload.status).to eq('awaiting_pickup')
+      end
+    end
   end
 end
