@@ -17,12 +17,22 @@ gem 'jbuilder'
 gem 'turbolinks'
 
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'devise', '~> 4.4'
 gem 'http'
 gem 'parallel'
+gem 'pg_search', '~> 2.3'
+gem 'pundit', '~> 2.2'
+gem 'whenever', '~> 1.0.0'
+gem 'will_paginate', '3.3.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  gem 'byebug', '~> 11.1.3'
+  gem 'factory_bot', '!= 6.4.5'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -39,5 +49,4 @@ end
 group :test do
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'factory_bot_rails'
 end

@@ -1,0 +1,32 @@
+<h1>Admin Orders Dashboard</h1>
+
+<%= form_tag admin_orders_path, method: :get do %>
+  <%= text_field_tag :customer_name, params[:customer_name], placeholder: "Customer Name" %>
+  <%= select_tag :status, options_for_select(Product::STATUS, params[:status]), prompt: "Select Status" %>
+  <%= date_field_tag :start_date, params[:start_date] %>
+  <%= date_field_tag :end_date, params[:end_date] %>
+  <%= submit_tag "Search" %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= link_to "ID", admin_orders_path(sort: 'id', direction: 'asc') %></th>
+      <th><%= link_to "Customer", admin_orders_path(sort: 'customer_name', direction: 'asc') %></th>
+      <th><%= link_to "Status", admin_orders_path(sort: 'status', direction: 'asc') %></th>
+      <th><%= link_to "Created At", admin_orders_path(sort: 'created_at', direction: 'desc') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= order.customer_name %></td>
+        <td><%= order.status %></td>
+        <td><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @orders %>
